@@ -1,28 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import routes from 'routes';
+
+import { Provider as ReduxProvider, useSelector } from 'react-redux';
+import store from 'store';
+
 import './App.css';
 
-class App extends Component {
-  render() {
+const router = createBrowserRouter(routes);
+
+function App() {
+    const storeContent = useSelector(state => state);
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <React.StrictMode>
+            <ReduxProvider store={store}>
+                <RouterProvider router={router} />
+                <pre>{JSON.stringify(storeContent, null, 2)}</pre>
+            </ReduxProvider>
+        </React.StrictMode>
     );
-  }
 }
 
 export default App;
